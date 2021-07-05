@@ -1,7 +1,11 @@
 from flask import Flask, render_template, redirect, url_for
 from flask_pymongo import PyMongo
 import scraping
+from splinter import Browser
+from bs4 import BeautifulSoup as soup
 import pandas as pd
+import datetime as dt
+from webdriver_manager.chrome import ChromeDriverManager
 
 app = Flask(__name__)
 
