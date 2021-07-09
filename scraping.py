@@ -6,13 +6,14 @@ import datetime as dt
 from webdriver_manager.chrome import ChromeDriverManager
 
 #initialize the browser, create a data dictionary, end the webDriver
-#and returned the scraped data
+#and return the scraped data
 def scrape_all():
     # Initiate headless driver for deployment
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=True)
-    #set variabels
+    #set variables
     news_title, news_paragraph = mars_news(browser)
+    hemisphere_image_urls = scrape_hemisphere(browser)
     # Run all scraping functions and store results in dictionary
     data = {
       "news_title": news_title,
@@ -126,8 +127,6 @@ def scrape_hemisphere(browser):
             hemisphere_image_urls.append(dictionary_copy)
         #browser back
         browser.back()
-        #quit the browser
-        browser.quit()
     return hemisphere_image_urls
 
 if __name__ == "__main__":

@@ -104,3 +104,34 @@ def mars_facts():
 
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html()
+
+#Hemisphere Images
+def scrape_hemisphere(browser):
+    url = 'https://marshemispheres.com/'
+    browser.visit(url)
+    # 2. Create a list to hold the images and titles.
+    hemisphere_image_urls = []
+    #retrieve the image urls and titles for each hemisphere.
+    for i in range(4):
+        #create an empty dictionary
+        hemispheres = {}
+        #click on each hemisphere link
+        hemisphere_link = browser.find_by_tag('h3')[i].click()
+        #parse the resulting html
+        html = browser.html
+        img_soup = soup(html, 'html.parser')
+        #retrieve the image title
+        title = img_soup.find('h2', class_='title').get_text()
+        #retreive the image url string and title for the hemisphere image
+        img_url_rel = img_url_rel = img_soup.find('img', class_='wide-image').get('src')
+        img_url = f'https://marshemispheres.com/{img_url_rel}'
+        #save image url string as the value for the img_url key
+        for pair in ["img_url", "title"]:
+            hemispheres[pair] = eval(pair)
+        #add the dictionary to the list
+        dictionary_copy = hemispheres.copy()
+        if dictionary_copy not in hemisphere_image_urls:
+            hemisphere_image_urls.append(dictionary_copy)
+        #browser back
+        browser.back()
+    return None
